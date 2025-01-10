@@ -1,4 +1,4 @@
-from chia_rs import (
+from cactus_rs import (
     SpendConditions,
     SpendBundleConditions,
     Coin,
@@ -7,8 +7,8 @@ from chia_rs import (
     Program,
     AugSchemeMPL,
 )
-from chia_rs.sized_ints import uint64
-from chia_rs.sized_bytes import bytes32
+from cactus_rs.sized_ints import uint64
+from cactus_rs.sized_bytes import bytes32
 import pytest
 import copy
 import random

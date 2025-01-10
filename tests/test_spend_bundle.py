@@ -1,5 +1,5 @@
 from typing import Any
-from chia_rs import SpendBundle
+from cactus_rs import SpendBundle
 import pytest
 
 expected_add1 = """\

@@ -13,21 +13,21 @@ v = sys.argv[1]
 tag = sys.argv[2]
 
 our_crates = [
-    "crates/chia-bls",
+    "crates/cactus-bls",
     "crates/clvm-traits",
-    "crates/chia-traits",
-    "crates/chia_py_streamable_macro",
-    "crates/chia_streamable_macro",
-    "crates/chia-protocol",
-    "crates/chia-tools",
+    "crates/cactus-traits",
+    "crates/cactus_py_streamable_macro",
+    "crates/cactus_streamable_macro",
+    "crates/cactus-protocol",
+    "crates/cactus-tools",
     "crates/clvm-utils",
     "crates/clvm-derive",
-    "crates/chia-puzzles",
-    "crates/chia-client",
-    "crates/chia-ssl",
-    "crates/chia-consensus",
-    "crates/chia-consensus/fuzz",
-    "crates/chia-puzzles/fuzz",
+    "crates/cactus-puzzles",
+    "crates/cactus-client",
+    "crates/cactus-ssl",
+    "crates/cactus-consensus",
+    "crates/cactus-consensus/fuzz",
+    "crates/cactus-puzzles/fuzz",
     "crates/clvm-utils/fuzz",
 ]
 
@@ -62,9 +62,9 @@ def update_cargo(name: str, crates: set[str]) -> None:
 
 
 crates = crates_with_changes()
-# always update the root crate (chia)
+# always update the root crate (cactus)
 crates.add(".")
-crates.add("chia")
+crates.add("cactus")
 
 crate_names = set([Path(n).name for n in crates])
 

@@ -2,9 +2,9 @@ from pathlib import Path
 from typing import Optional, TextIO
 from glob import glob
 
-output_file = Path(__file__).parent.resolve() / "python" / "chia_rs" / "chia_rs.pyi"
+output_file = Path(__file__).parent.resolve() / "python" / "cactus_rs" / "cactus_rs.pyi"
 crates_dir = Path(__file__).parent.parent.resolve() / "crates"
-input_dir = crates_dir / "chia-protocol" / "src"
+input_dir = crates_dir / "cactus-protocol" / "src"
 
 # enums are exposed to python as int
 enums = set(
@@ -228,13 +228,13 @@ extra_members = {
         "def get_tree_hash(self) -> bytes32: ...",
         "@staticmethod\n    def default() -> Program: ...",
         "@staticmethod\n    def fromhex(h: str) -> Program: ...",
-        "def run_mempool_with_cost(self, max_cost: int, args: object) -> tuple[int, ChiaProgram]: ...",
-        "def run_with_cost(self, max_cost: int, args: object) -> tuple[int, ChiaProgram]: ...",
-        "def _run(self, max_cost: int, flags: int, args: object) -> tuple[int, ChiaProgram]: ...",
+        "def run_mempool_with_cost(self, max_cost: int, args: object) -> tuple[int, CactusProgram]: ...",
+        "def run_with_cost(self, max_cost: int, args: object) -> tuple[int, CactusProgram]: ...",
+        "def _run(self, max_cost: int, flags: int, args: object) -> tuple[int, CactusProgram]: ...",
         "@staticmethod\n    def to(o: object) -> Program: ...",
-        "@staticmethod\n    def from_program(p: ChiaProgram) -> Program: ...",
-        "def to_program(self) -> ChiaProgram: ...",
-        "def uncurry(self) -> tuple[ChiaProgram, ChiaProgram]: ...",
+        "@staticmethod\n    def from_program(p: CactusProgram) -> Program: ...",
+        "def to_program(self) -> CactusProgram: ...",
+        "def uncurry(self) -> tuple[CactusProgram, CactusProgram]: ...",
     ],
     "SpendBundle": [
         "@classmethod\n    def aggregate(cls, spend_bundles: list[SpendBundle]) -> Self: ...",
@@ -262,7 +262,7 @@ for filepath in sorted(glob(str(input_dir / "*.rs"))):
 
 classes.extend(
     parse_rust_source(
-        str(crates_dir / "chia-consensus" / "src" / "consensus_constants.rs"),
+        str(crates_dir / "cactus-consensus" / "src" / "consensus_constants.rs"),
         upper_case=True,
     )
 )
@@ -278,7 +278,7 @@ from typing import Optional, Sequence, Union, Any, ClassVar, final
 from .sized_bytes import bytes32, bytes100
 from .sized_ints import uint8, uint16, uint32, uint64, uint128, int8, int16, int32, int64
 from typing_extensions import Self
-from chia.types.blockchain_format.program import Program as ChiaProgram
+from cactus.types.blockchain_format.program import Program as CactusProgram
 
 ReadableBuffer = Union[bytes, bytearray, memoryview]
 
@@ -351,7 +351,7 @@ ELIGIBLE_FOR_FF: int = ...
 
 NO_UNKNOWN_OPS: int = ...
 
-def run_chia_program(
+def run_cactus_program(
     program: bytes, args: bytes, max_cost: int, flags: int
 ) -> tuple[int, LazyNode]: ...
 

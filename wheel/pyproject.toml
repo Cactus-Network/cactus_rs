@@ -8,5 +8,5 @@ features = ["pyo3/extension-module"]
 python-source = "python"
 
 [project]
-name = "chia_rs"
+name = "cactus_rs"
 dependencies = ["typing_extensions"]

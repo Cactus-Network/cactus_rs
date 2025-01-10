@@ -4,28 +4,28 @@ version = "0.17.0"
 edition = "2021"
 license = "Apache-2.0"
 description = "Traits for encoding and decoding CLVM objects."
-authors = ["Brandon Haggstrom <b.haggstrom@chia.net>"]
-homepage = "https://github.com/Chia-Network/chia_rs"
-repository = "https://github.com/Chia-Network/chia_rs"
+authors = ["Brandon Haggstrom <b.haggstrom@cactus-network.net>"]
+homepage = "https://github.com/Cactus-Network/cactus_rs"
+repository = "https://github.com/Cactus-Network/cactus_rs"
 
 [package.metadata.docs.rs]
-features = ["derive", "chia-bls"]
+features = ["derive", "cactus-bls"]
 
 [lints]
 workspace = true
 
 [features]
 derive = ["dep:clvm-derive"]
-chia-bls = ["dep:chia-bls"]
-chia-secp = ["dep:chia-secp"]
+cactus-bls = ["dep:cactus-bls"]
+cactus-secp = ["dep:cactus-secp"]
 py-bindings = ["dep:pyo3"]
 
 [dependencies]
 pyo3 = { workspace = true, optional = true }
 clvmr = { workspace = true }
 clvm-derive = { workspace = true, optional = true }
-chia-bls = { workspace = true, optional = true }
-chia-secp = { workspace = true, optional = true }
+cactus-bls = { workspace = true, optional = true }
+cactus-secp = { workspace = true, optional = true }
 num-bigint = { workspace = true }
 thiserror = { workspace = true }
 

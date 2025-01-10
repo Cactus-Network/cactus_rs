@@ -1,0 +1,82 @@
+[package]
+name = "cactus-tools"
+version = "0.17.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "Utility functions and types used by the Cactus blockchain full node"
+authors = ["Arvid Norberg <arvid@cactus-network.net>"]
+homepage = "https://github.com/Cactus-Network/cactus_rs"
+repository = "https://github.com/Cactus-Network/cactus_rs"
+
+[lints]
+workspace = true
+
+[dependencies]
+cactus-protocol = { workspace = true }
+cactus-traits = { workspace = true }
+clvm-utils = { workspace = true }
+clvm-traits = { workspace = true }
+cactus-puzzles = { workspace = true }
+cactus-bls = { workspace = true }
+cactus-consensus = { workspace = true }
+clvmr = { workspace = true, features = ["counters"] }
+rusqlite = { workspace = true, features = ["bundled"] }
+clap = { workspace = true, features = ["derive"] }
+zstd = { workspace = true }
+blocking-threadpool = { workspace = true }
+hex = { workspace = true }
+hex-literal = { workspace = true }
+
+[lib]
+name = "cactus_tools"
+crate-type = ["rlib"]
+
+[[bin]]
+name = "analyze-chain"
+test = false
+bench = false
+
+[[bin]]
+name = "test-block-generators"
+test = false
+bench = false
+
+[[bin]]
+name = "compress-clvm"
+test = false
+bench = false
+
+[[bin]]
+name = "gen-corpus"
+test = false
+bench = false
+
+[[bin]]
+name = "run-spend"
+test = false
+bench = false
+
+[[bin]]
+name = "fast-forward-spend"
+test = false
+bench = false
+
+[[bin]]
+name = "optimize-db"
+test = false
+bench = false
+
+[[bin]]
+name = "get-generator"
+test = false
+bench = false
+
+[[bin]]
+name = "validate-blockchain-db"
+test = false
+bench = false
+
+[[bin]]
+name = "rollback-blockchain-db"
+test = false
+bench = false

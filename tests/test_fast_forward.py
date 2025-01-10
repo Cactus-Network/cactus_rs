@@ -1,4 +1,4 @@
-from chia_rs import (
+from cactus_rs import (
     CoinSpend,
     Coin,
     supports_fast_forward,

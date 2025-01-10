@@ -1,1 +1,1 @@
-The `chia_rs` wheel contains python bindings for code from the `chia` crate.
+The `cactus_rs` wheel contains python bindings for code from the `cactus` crate.

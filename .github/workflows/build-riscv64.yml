@@ -42,9 +42,9 @@ jobs:
         run: |
           docker run --rm --platform linux/riscv64 \
             -v ${{ github.workspace }}:/ws --workdir=/ws \
-            chianetwork/ubuntu-22.04-risc-builder:latest \
+            cactusnetwork/ubuntu-22.04-risc-builder:latest \
             bash -exc '\
-            cargo test --release -p chia-consensus
+            cargo test --release -p cactus-consensus
             '
 
   build_wheels:
@@ -77,13 +77,13 @@ jobs:
         run: |
           docker run --rm --platform linux/riscv64 \
             -v ${{ github.workspace }}:/ws --workdir=/ws \
-            chianetwork/ubuntu-22.04-risc-builder:latest \
+            cactusnetwork/ubuntu-22.04-risc-builder:latest \
             bash -exc '\
             pyenv global ${{ matrix.python.matrix }}
             python -m venv venv && \
             source ./venv/bin/activate && \
             pip install --upgrade pip && \
-            pip install --extra-index-url https://pypi.chia.net/simple/ maturin==1.2.3 && \
+            pip install --extra-index-url https://pypi.cactus-network.net/simple/ maturin==1.2.3 && \
             maturin build -i python --release -m wheel/Cargo.toml \
             '
 
@@ -94,7 +94,7 @@ jobs:
           path: ./target/wheels
           if-no-files-found: error
   upload:
-    name: Upload to Chia PyPI
+    name: Upload to Cactus PyPI
     runs-on: ubuntu-latest
     needs:
       - build_wheels
@@ -105,7 +105,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set Env
-        uses: Chia-Network/actions/setjobenv@main
+        uses: Cactus-Network/actions/setjobenv@main
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -121,14 +121,14 @@ jobs:
         if: env.RELEASE == 'true'
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::${{ secrets.CHIA_AWS_ACCOUNT_ID }}:role/installer-upload
+          role-to-assume: arn:aws:iam::${{ secrets.CACTUS_AWS_ACCOUNT_ID }}:role/installer-upload
           aws-region: us-west-2
 
       - name: List existing wheels
         if: env.RELEASE == 'true'
         shell: sh
         run: |
-          aws s3 ls s3://download.chia.net/simple/chia-rs/ > existing_wheel_list_raw
+          aws s3 ls s3://download.cactus-network.net/simple/cactus-rs/ > existing_wheel_list_raw
           cat existing_wheel_list_raw
           cat existing_wheel_list_raw | tr -s ' ' | cut -d ' ' -f 4 > existing_wheel_list
 
@@ -136,7 +136,7 @@ jobs:
         if: env.RELEASE == 'true'
         shell: sh
         run: |
-          (cd target/wheels/; ls chia_rs-*.whl) > new_wheel_list
+          (cd target/wheels/; ls cactus_rs-*.whl) > new_wheel_list
           cat new_wheel_list | xargs -I % sh -c 'ls -l target/wheels/%'
 
       - name: Choose wheels to upload
@@ -150,4 +150,4 @@ jobs:
         if: env.RELEASE == 'true'
         shell: sh
         run: |
-          cat upload_wheel_list | xargs -I % sh -c 'aws s3 cp target/wheels/% s3://download.chia.net/simple/chia-rs/'
+          cat upload_wheel_list | xargs -I % sh -c 'aws s3 cp target/wheels/% s3://download.cactus-network.net/simple/cactus-rs/'

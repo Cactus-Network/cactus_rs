@@ -1,0 +1,21 @@
+[package]
+name = "cactus-client"
+version = "0.17.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "Cactus light client and async peer connections."
+authors = ["Brandon Haggstrom <b.haggstrom@cactus-network.net>"]
+homepage = "https://github.com/Cactus-Network/cactus_rs"
+repository = "https://github.com/Cactus-Network/cactus_rs"
+
+[lints]
+workspace = true
+
+[dependencies]
+cactus-protocol = { workspace = true }
+cactus-traits = { workspace = true }
+tokio = { workspace = true, features = ["rt", "sync"] }
+tokio-tungstenite = { workspace = true }
+futures-util = { workspace = true }
+tungstenite = { workspace = true }
+thiserror = { workspace = true }

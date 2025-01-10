@@ -3,7 +3,7 @@ from hashlib import sha256
 
 import sys
 import time
-from chia_rs import (
+from cactus_rs import (
     MerkleSet as RustMerkleSet,
     compute_merkle_set_root,
     confirm_included_already_hashed as ru_confirm_included_already_hashed,
@@ -15,7 +15,7 @@ from merkle_set import (
     confirm_included_already_hashed as py_confirm_included_already_hashed,
     confirm_not_included_already_hashed as py_confirm_not_included_already_hashed,
 )
-from chia_rs.sized_bytes import bytes32
+from cactus_rs.sized_bytes import bytes32
 
 
 def check_proof(

@@ -1,7 +1,7 @@
 #![no_main]
 use libfuzzer_sys::fuzz_target;
 
-use chia_fuzz::{make_tree, BitCursor};
+use cactus_fuzz::{make_tree, BitCursor};
 use clvm_utils::{tree_hash, tree_hash_cached, TreeHash};
 use clvmr::{Allocator, NodePtr};
 use std::collections::{HashMap, HashSet};

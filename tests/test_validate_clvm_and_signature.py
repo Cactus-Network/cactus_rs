@@ -1,5 +1,5 @@
-from chia_rs import validate_clvm_and_signature
-from chia_rs import SpendBundle, CoinSpend, Coin, Program, PrivateKey, AugSchemeMPL
+from cactus_rs import validate_clvm_and_signature
+from cactus_rs import SpendBundle, CoinSpend, Coin, Program, PrivateKey, AugSchemeMPL
 from run_gen import DEFAULT_CONSTANTS
 import pytest
 

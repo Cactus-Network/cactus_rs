@@ -1,8 +1,8 @@
-import chia_rs
+import cactus_rs
 
-print("chia_rs path:", chia_rs.__file__)
+print("cactus_rs path:", cactus_rs.__file__)
 
-from chia_rs import tree_hash
+from cactus_rs import tree_hash
 from hashlib import sha256
 
 

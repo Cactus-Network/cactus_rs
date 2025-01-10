@@ -1,7 +1,7 @@
-use chia_consensus::allocator::make_allocator;
-use chia_consensus::gen::flags::ALLOW_BACKREFS;
-use chia_protocol::LazyNode;
-use clvmr::chia_dialect::ChiaDialect;
+use cactus_consensus::allocator::make_allocator;
+use cactus_consensus::gen::flags::ALLOW_BACKREFS;
+use cactus_protocol::LazyNode;
+use clvmr::cactus_dialect::CactusDialect;
 use clvmr::cost::Cost;
 use clvmr::reduction::Response;
 use clvmr::run_program::run_program;
@@ -24,7 +24,7 @@ pub fn serialized_length(program: PyBuffer<u8>) -> PyResult<u64> {
 
 #[allow(clippy::borrow_deref_ref)]
 #[pyfunction]
-pub fn run_chia_program(
+pub fn run_cactus_program(
     py: Python<'_>,
     program: &[u8],
     args: &[u8],
@@ -41,7 +41,7 @@ pub fn run_chia_program(
         };
         let program = deserialize(&mut allocator, program)?;
         let args = deserialize(&mut allocator, args)?;
-        let dialect = ChiaDialect::new(flags);
+        let dialect = CactusDialect::new(flags);
 
         Ok(py.allow_threads(|| run_program(&mut allocator, &dialect, program, args, max_cost)))
     })()?

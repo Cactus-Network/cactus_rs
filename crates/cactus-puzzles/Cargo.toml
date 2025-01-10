@@ -1,0 +1,33 @@
+[package]
+name = "cactus-puzzles"
+version = "0.17.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "Cactus primitives needed for building wallets."
+authors = ["Brandon Haggstrom <b.haggstrom@cactus-network.net>"]
+homepage = "https://github.com/Cactus-Network/cactus_rs"
+repository = "https://github.com/Cactus-Network/cactus_rs"
+
+[lints]
+workspace = true
+
+[features]
+arbitrary = ["dep:arbitrary", "cactus-protocol/arbitrary"]
+
+[dependencies]
+clvmr = { workspace = true }
+num-bigint = { workspace = true }
+hex-literal = { workspace = true }
+clvm-utils = { workspace = true }
+clvm-traits = { workspace = true, features = ["cactus-bls"] }
+cactus-sha2 = { workspace = true }
+cactus-bls = { workspace = true }
+cactus-protocol = { workspace = true }
+arbitrary = { workspace = true, features = ["derive"], optional = true }
+
+[dev-dependencies]
+hex = { workspace = true }
+anyhow = { workspace = true }
+
+[lib]
+crate-type = ["rlib"]

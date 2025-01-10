@@ -1,18 +1,18 @@
-# chia_rs
+# cactus_rs
 
-![GitHub](https://img.shields.io/github/license/Chia-Network/chia_rs?logo=Github)
-[![Coverage Status](https://coveralls.io/repos/github/Chia-Network/chia_rs/badge.svg?branch=main)](https://coveralls.io/github/Chia-Network/chia_rs?branch=main)
-![Build Crate](https://github.com/Chia-Network/chia_rs/actions/workflows/build-crate.yml/badge.svg)
-![Build NPM](https://github.com/Chia-Network/chia_rs/actions/workflows/build-npm.yml/badge.svg)
-![Build Wheels](https://github.com/Chia-Network/chia_rs/actions/workflows/build-wheels.yml/badge.svg)
+![GitHub](https://img.shields.io/github/license/Cactus-Network/cactus_rs?logo=Github)
+[![Coverage Status](https://coveralls.io/repos/github/Cactus-Network/cactus_rs/badge.svg?branch=main)](https://coveralls.io/github/Cactus-Network/cactus_rs?branch=main)
+![Build Crate](https://github.com/Cactus-Network/cactus_rs/actions/workflows/build-crate.yml/badge.svg)
+![Build NPM](https://github.com/Cactus-Network/cactus_rs/actions/workflows/build-npm.yml/badge.svg)
+![Build Wheels](https://github.com/Cactus-Network/cactus_rs/actions/workflows/build-wheels.yml/badge.svg)
 
-![PyPI](https://img.shields.io/pypi/v/chia_rs?logo=pypi)
-![PyPI - Format](https://img.shields.io/pypi/format/chia_rs?logo=pypi)
-[![Crates.io](https://img.shields.io/crates/v/chia.svg)](https://crates.io/crates/chia)
-[![Downloads](https://img.shields.io/crates/d/chia.svg)](https://crates.io/crates/chia)
-[![Docs](https://docs.rs/chia/badge.svg)](https://docs.rs/chia/latest/chia/)
+![PyPI](https://img.shields.io/pypi/v/cactus_rs?logo=pypi)
+![PyPI - Format](https://img.shields.io/pypi/format/cactus_rs?logo=pypi)
+[![Crates.io](https://img.shields.io/crates/v/cactus.svg)](https://crates.io/crates/cactus)
+[![Downloads](https://img.shields.io/crates/d/cactus.svg)](https://crates.io/crates/cactus)
+[![Docs](https://docs.rs/cactus/badge.svg)](https://docs.rs/cactus/latest/cactus/)
 
-A collection of Rust crates for working with the Chia blockchain. There are also Python bindings in the form of a wheel.
+A collection of Rust crates for working with the Cactus blockchain. There are also Python bindings in the form of a wheel.
 
 ## Prerequisites
 
@@ -51,14 +51,14 @@ Activate the virtual env:
 
 ### Python Tests
 
-The `wheel` crate is a single Python wheel that exports bindings to various functionality in the repository, mostly from `chia-consensus` and `chia-protocol`.
+The `wheel` crate is a single Python wheel that exports bindings to various functionality in the repository, mostly from `cactus-consensus` and `cactus-protocol`.
 
 It's built with `maturin`, so you need to have activated a python virtual environment for the build to work.
 
 The bindings are tested with `pytest`. Before you run them, install the following dependencies:
 
 ```bash
-pip install pytest maturin typing-extensions chia-blockchain==2.1.2
+pip install pytest maturin typing-extensions cactus-blockchain==2.1.2
 ```
 
 And build the Python wheel:
@@ -121,16 +121,16 @@ Fuzzers can't be run or listed for the whole workspace, but only for individual 
 It's run like this:
 
 ```bash
-cd crates/chia-tools
+cd crates/cactus-tools
 cargo run --release --bin gen-corpus -- --help
 ```
 
 The following crates have fuzzers:
 
-- chia-bls
-- chia-consensus
-- chia-protocol
-- chia-puzzles
+- cactus-bls
+- cactus-consensus
+- cactus-protocol
+- cactus-puzzles
 - clvm-utils
 
 To list and run fuzzers:

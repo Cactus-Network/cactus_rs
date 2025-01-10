@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from chia_rs import (
+from cactus_rs import (
     run_block_generator,
     SpendBundleConditions,
     run_block_generator2,
@@ -8,8 +8,8 @@ from chia_rs import (
     DONT_VALIDATE_SIGNATURE,
     G2Element,
 )
-from chia_rs.sized_bytes import bytes32
-from chia_rs.sized_ints import uint8, uint16, uint32, uint64, uint128
+from cactus_rs.sized_bytes import bytes32
+from cactus_rs.sized_ints import uint8, uint16, uint32, uint64, uint128
 from time import time
 import sys
 from time import perf_counter
@@ -89,8 +89,8 @@ def run_gen(
     fn: str, flags: int = 0, args: Optional[str] = None, version: int = 1
 ) -> tuple[Optional[int], Optional[SpendBundleConditions], float]:
 
-    # constants from the main chia blockchain:
-    # https://github.com/Chia-Network/chia-blockchain/blob/main/chia/consensus/default_constants.py
+    # constants from the main cactus blockchain:
+    # https://github.com/Cactus-Network/cactus-blockchain/blob/main/cactus/consensus/default_constants.py
     max_cost = 11000000000
     cost_per_byte = 12000
 

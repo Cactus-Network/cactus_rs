@@ -1,6 +1,6 @@
-from chia_rs import Coin
-from chia_rs.sized_ints import uint64
-from chia_rs.sized_bytes import bytes32
+from cactus_rs import Coin
+from cactus_rs.sized_ints import uint64
+from cactus_rs.sized_bytes import bytes32
 import pytest
 
 coin = b"bcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbc"

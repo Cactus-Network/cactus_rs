@@ -32,7 +32,7 @@ jobs:
         with:
           fetch-depth: 1
 
-      - uses: chia-network/actions/setup-python@main
+      - uses: cactus-network/actions/setup-python@main
         name: Install Python ${{ matrix.python-version }}
         with:
           python-version: ${{ matrix.python-version }}
@@ -48,7 +48,7 @@ jobs:
         run: |
           python -m venv venv
 
-      - uses: chia-network/actions/activate-venv@main
+      - uses: cactus-network/actions/activate-venv@main
 
       - name: Install dependencies
         run: |
@@ -60,7 +60,7 @@ jobs:
 
       - name: Build
         run: |
-          python -m pip install clvm_tools colorama blspy chia-blockchain==2.1.2 clvm==0.9.8
+          python -m pip install clvm_tools colorama blspy cactus-blockchain==2.1.2 clvm==0.9.8
           maturin develop --release -m wheel/Cargo.toml
 
       - name: python mypy
@@ -72,14 +72,14 @@ jobs:
         run: |
           FAILURE=0
           echo "::group::concise"
-          if ! stubtest ${{ env.stubtest_args }} --allowlist wheel/stubtest.allowlist --concise chia_rs
+          if ! stubtest ${{ env.stubtest_args }} --allowlist wheel/stubtest.allowlist --concise cactus_rs
           then
             FAILURE=1
           fi
           echo "::endgroup::"
 
           echo "::group::complete"
-          if ! stubtest ${{ env.stubtest_args }} --allowlist wheel/stubtest.allowlist chia_rs
+          if ! stubtest ${{ env.stubtest_args }} --allowlist wheel/stubtest.allowlist cactus_rs
           then
             FAILURE=1
           fi
@@ -109,7 +109,7 @@ jobs:
         with:
           fetch-depth: 1
 
-      - uses: chia-network/actions/setup-python@main
+      - uses: cactus-network/actions/setup-python@main
         name: Install Python ${{ matrix.python-version }}
         with:
           python-version: ${{ matrix.python-version }}
@@ -121,7 +121,7 @@ jobs:
         run: |
           python -m venv venv
 
-      - uses: chia-network/actions/activate-venv@main
+      - uses: cactus-network/actions/activate-venv@main
 
       - name: Install dependencies
         run: |
@@ -160,4 +160,4 @@ jobs:
 
       - name: cargo bench
         run: |
-          cargo bench --workspace --exclude chia_rs
+          cargo bench --workspace --exclude cactus_rs

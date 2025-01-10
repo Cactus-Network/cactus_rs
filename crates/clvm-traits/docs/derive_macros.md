@@ -59,14 +59,14 @@ If you want your solution to be parsed strictly, you can use list instead.
 ### Curry
 
 This represents the argument part of a curried CLVM program.
-In Chia, currying commits to and partially applies some of the arguments of a program, without calling it.
+In Cactus, currying commits to and partially applies some of the arguments of a program, without calling it.
 
 The arguments are quoted and terminated with `1`, which is how partial application is implemented in CLVM.
 Note that if you mark the last field to [consume the rest of the arguments](#consume-the-rest), there is no `1` terminator.
 
 For example, the curried arguments `[A, B, C]` are encoded as `(c (q . A) (c (q . B) (c (q . C) 1)))`.
 
-You can read more about currying on the [Chia blockchain documentation](https://docs.chia.net/guides/chialisp-currying).
+You can read more about currying on the [Cactus blockchain documentation](https://docs.cactus-network.net/guides/cactuslisp-currying).
 
 The following example is for demonstration purposes only:
 

@@ -1,17 +1,17 @@
-from chia_rs import (
+from cactus_rs import (
     get_puzzle_and_solution_for_coin,
     get_puzzle_and_solution_for_coin2,
     run_block_generator2,
     ALLOW_BACKREFS,
-    run_chia_program,
+    run_cactus_program,
     Program,
     Coin,
     G2Element,
     DONT_VALIDATE_SIGNATURE,
 )
 from run_gen import DEFAULT_CONSTANTS
-from chia_rs.sized_bytes import bytes32
-from chia_rs.sized_ints import uint64
+from cactus_rs.sized_bytes import bytes32
+from cactus_rs.sized_ints import uint64
 import pytest
 
 DESERIALIZE_MOD = bytes.fromhex(
@@ -86,7 +86,7 @@ def test_get_puzzle_and_solution_for_coin(input_file: str) -> None:
         assert len(puzzle) > 0
         assert len(solution) > 0
 
-        cost, ret = run_chia_program(puzzle, solution, MAX_COST, 0)
+        cost, ret = run_cactus_program(puzzle, solution, MAX_COST, 0)
         assert cost > 0
         assert cost < MAX_COST
 

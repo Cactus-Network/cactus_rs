@@ -1,0 +1,35 @@
+[package]
+name = "cactus-protocol"
+version = "0.17.0"
+edition = "2021"
+license = "Apache-2.0"
+description = "Cactus network protocol message types"
+authors = ["Arvid Norberg <arvid@cactus-network.net>"]
+homepage = "https://github.com/Cactus-Network/cactus_rs"
+repository = "https://github.com/Cactus-Network/cactus_rs"
+
+[lints]
+workspace = true
+
+[features]
+py-bindings = ["dep:pyo3", "dep:cactus_py_streamable_macro", "cactus-traits/py-bindings", "cactus-bls/py-bindings"]
+arbitrary = ["dep:arbitrary", "cactus-bls/arbitrary"]
+
+[dependencies]
+pyo3 = { workspace = true, features = ["multiple-pymethods", "num-bigint"], optional = true }
+hex = { workspace = true }
+cactus_streamable_macro = { workspace = true }
+cactus_py_streamable_macro = { workspace = true, optional = true }
+clvmr = { workspace = true }
+cactus-traits = { workspace = true }
+cactus-sha2 = { workspace = true }
+clvm-traits = { workspace = true, features = ["derive"] }
+clvm-utils = { workspace = true }
+cactus-bls = { workspace = true }
+arbitrary = { workspace = true, features = ["derive"], optional = true }
+
+[dev-dependencies]
+rstest = { workspace = true }
+
+[lib]
+crate-type = ["rlib"]

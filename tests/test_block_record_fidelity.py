@@ -2,9 +2,9 @@ from typing import Optional, Any, Callable
 
 import sys
 import time
-from chia_rs import BlockRecord, ClassgroupElement
-from chia_rs.sized_bytes import bytes32, bytes100
-from chia_rs.sized_ints import uint32, uint64, uint8, uint128
+from cactus_rs import BlockRecord, ClassgroupElement
+from cactus_rs.sized_bytes import bytes32, bytes100
+from cactus_rs.sized_ints import uint32, uint64, uint8, uint128
 from random import Random
 from run_gen import DEFAULT_CONSTANTS
 
@@ -111,7 +111,7 @@ def test_bytes32():
     rng = Random()
     rng.seed(1337)
     br = get_block_record(rng)
-    # the following line is commented until chia-blockchain uses the moved sized bytes class
+    # the following line is commented until cactus-blockchain uses the moved sized bytes class
     # assert isinstance(br.header_hash, bytes32)
     assert (
         f"{br.header_hash}"

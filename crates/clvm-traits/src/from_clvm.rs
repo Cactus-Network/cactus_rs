@@ -194,8 +194,8 @@ impl<N, D: ClvmDecoder<Node = N>> FromClvm<D> for String {
     }
 }
 
-#[cfg(feature = "chia-bls")]
-impl<N, D: ClvmDecoder<Node = N>> FromClvm<D> for chia_bls::PublicKey {
+#[cfg(feature = "cactus-bls")]
+impl<N, D: ClvmDecoder<Node = N>> FromClvm<D> for cactus_bls::PublicKey {
     fn from_clvm(decoder: &D, node: N) -> Result<Self, FromClvmError> {
         let bytes = decoder.decode_atom(&node)?;
         let error = Err(FromClvmError::WrongAtomLength {
@@ -207,8 +207,8 @@ impl<N, D: ClvmDecoder<Node = N>> FromClvm<D> for chia_bls::PublicKey {
     }
 }
 
-#[cfg(feature = "chia-bls")]
-impl<N, D: ClvmDecoder<Node = N>> FromClvm<D> for chia_bls::Signature {
+#[cfg(feature = "cactus-bls")]
+impl<N, D: ClvmDecoder<Node = N>> FromClvm<D> for cactus_bls::Signature {
     fn from_clvm(decoder: &D, node: N) -> Result<Self, FromClvmError> {
         let bytes = decoder.decode_atom(&node)?;
         let error = Err(FromClvmError::WrongAtomLength {
@@ -220,8 +220,8 @@ impl<N, D: ClvmDecoder<Node = N>> FromClvm<D> for chia_bls::Signature {
     }
 }
 
-#[cfg(feature = "chia-secp")]
-impl<D> FromClvm<D> for chia_secp::K1PublicKey
+#[cfg(feature = "cactus-secp")]
+impl<D> FromClvm<D> for cactus_secp::K1PublicKey
 where
     D: ClvmDecoder,
 {
@@ -238,8 +238,8 @@ where
     }
 }
 
-#[cfg(feature = "chia-secp")]
-impl<D> FromClvm<D> for chia_secp::K1Signature
+#[cfg(feature = "cactus-secp")]
+impl<D> FromClvm<D> for cactus_secp::K1Signature
 where
     D: ClvmDecoder,
 {
@@ -256,8 +256,8 @@ where
     }
 }
 
-#[cfg(feature = "chia-secp")]
-impl<D> FromClvm<D> for chia_secp::R1PublicKey
+#[cfg(feature = "cactus-secp")]
+impl<D> FromClvm<D> for cactus_secp::R1PublicKey
 where
     D: ClvmDecoder,
 {
@@ -274,8 +274,8 @@ where
     }
 }
 
-#[cfg(feature = "chia-secp")]
-impl<D> FromClvm<D> for chia_secp::R1Signature
+#[cfg(feature = "cactus-secp")]
+impl<D> FromClvm<D> for cactus_secp::R1Signature
 where
     D: ClvmDecoder,
 {
@@ -390,10 +390,10 @@ mod tests {
         assert_eq!(decode(a, "80"), Ok(String::new()));
     }
 
-    #[cfg(feature = "chia-bls")]
+    #[cfg(feature = "cactus-bls")]
     #[test]
     fn test_public_key() {
-        use chia_bls::PublicKey;
+        use cactus_bls::PublicKey;
         use hex_literal::hex;
 
         let a = &mut Allocator::new();
@@ -418,10 +418,10 @@ mod tests {
         );
     }
 
-    #[cfg(feature = "chia-bls")]
+    #[cfg(feature = "cactus-bls")]
     #[test]
     fn test_signature() {
-        use chia_bls::Signature;
+        use cactus_bls::Signature;
         use hex_literal::hex;
 
         let a = &mut Allocator::new();
@@ -446,10 +446,10 @@ mod tests {
         );
     }
 
-    #[cfg(feature = "chia-secp")]
+    #[cfg(feature = "cactus-secp")]
     #[test]
     fn test_secp_public_key() {
-        use chia_secp::{K1PublicKey, R1PublicKey};
+        use cactus_secp::{K1PublicKey, R1PublicKey};
         use hex_literal::hex;
 
         let a = &mut Allocator::new();
@@ -489,10 +489,10 @@ mod tests {
         );
     }
 
-    #[cfg(feature = "chia-secp")]
+    #[cfg(feature = "cactus-secp")]
     #[test]
     fn test_secp_signature() {
-        use chia_secp::K1Signature;
+        use cactus_secp::K1Signature;
         use hex_literal::hex;
 
         let a = &mut Allocator::new();

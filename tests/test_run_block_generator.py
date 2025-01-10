@@ -1,4 +1,4 @@
-from chia_rs import (
+from cactus_rs import (
     run_block_generator,
     run_block_generator2,
     G2Element,

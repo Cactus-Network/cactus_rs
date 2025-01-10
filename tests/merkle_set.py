@@ -4,7 +4,7 @@ from abc import ABCMeta, abstractmethod
 from hashlib import sha256
 from typing import TYPE_CHECKING, Any, Iterable, Optional
 
-from chia_rs.sized_bytes import bytes32
+from cactus_rs.sized_bytes import bytes32
 
 if TYPE_CHECKING:
     from hashlib import _Hash

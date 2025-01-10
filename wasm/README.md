@@ -1,4 +1,4 @@
-The `chia_wasm` package has JavaScript bindings for the rust implementation of the `chia` crate in wasm.
+The `cactus_wasm` package has JavaScript bindings for the rust implementation of the `cactus` crate in wasm.
 
 ## Build
 

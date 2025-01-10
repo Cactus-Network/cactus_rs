@@ -1,4 +1,4 @@
-use chia_sha2::Sha256;
+use cactus_sha2::Sha256;
 use clvmr::allocator::{Allocator, NodePtr, SExp};
 use clvmr::serde::node_from_bytes_backrefs_record;
 use std::collections::{HashMap, HashSet};

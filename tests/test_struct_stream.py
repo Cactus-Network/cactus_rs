@@ -16,7 +16,7 @@ from _pytest.fixtures import SubRequest
 from _pytest.mark.structures import ParameterSet
 from typing_extensions import final
 
-from chia_rs.sized_ints import (
+from cactus_rs.sized_ints import (
     int8,
     int16,
     int32,
@@ -28,7 +28,7 @@ from chia_rs.sized_ints import (
     uint64,
     uint128,
 )
-from chia_rs.struct_stream import StructStream, parse_metadata_from_name
+from cactus_rs.struct_stream import StructStream, parse_metadata_from_name
 
 
 def dataclass_parameter(instance: object) -> ParameterSet:

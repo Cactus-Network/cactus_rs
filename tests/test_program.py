@@ -1,11 +1,11 @@
-from chia_rs import run_chia_program, Program
-from chia_rs.sized_bytes import bytes32
+from cactus_rs import run_cactus_program, Program
+from cactus_rs.sized_bytes import bytes32
 
 
 def test_raise() -> None:
     try:
         # (x (q . "foobar"))
-        run_chia_program(
+        run_cactus_program(
             bytes.fromhex("ff08ffff0186666f6f62617280"), bytes.fromhex("80"), 100000, 0
         )
         # We expect this to throw
@@ -31,7 +31,7 @@ def test_repr() -> None:
     assert f"{temp}" == "Program(ff08ffff0183666f6f80)"
 
     try:
-        run_chia_program(bytes(temp), bytes.fromhex("00"), 1100000000, 0)
+        run_cactus_program(bytes(temp), bytes.fromhex("00"), 1100000000, 0)
         assert False
     except ValueError as e:
         assert f"{e}" == "('clvm raise', '83666f6f')"

@@ -4,9 +4,9 @@ version = "0.17.0"
 edition = "2021"
 license = "Apache-2.0"
 description = "Derive macros for implementing CLVM traits."
-authors = ["Brandon Haggstrom <b.haggstrom@chia.net>"]
-homepage = "https://github.com/Chia-Network/chia_rs"
-repository = "https://github.com/Chia-Network/chia_rs"
+authors = ["Brandon Haggstrom <b.haggstrom@cactus-network.net>"]
+homepage = "https://github.com/Cactus-Network/cactus_rs"
+repository = "https://github.com/Cactus-Network/cactus_rs"
 
 [lints]
 workspace = true

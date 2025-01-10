@@ -1,5 +1,5 @@
 import blspy
-import chia_rs
+import cactus_rs
 from random import getrandbits
 import sys
 from typing import Any
@@ -14,7 +14,7 @@ def randbytes(n: int) -> bytes:
     return bytes(ret)
 
 
-# make sure chia_rs counterpart behaves the same as blspy
+# make sure cactus_rs counterpart behaves the same as blspy
 def test_bls() -> None:
     print()
 
@@ -25,24 +25,24 @@ def test_bls() -> None:
 
         #### generator() ####
         assert bytes(blspy.G1Element.generator()) == bytes(
-            chia_rs.G1Element.generator()
+            cactus_rs.G1Element.generator()
         )
         assert bytes(blspy.G2Element.generator()) == bytes(
-            chia_rs.G2Element.generator()
+            cactus_rs.G2Element.generator()
         )
 
         ####  default constructors  ####
         pk1 = blspy.G1Element()
-        pk2 = chia_rs.G1Element()
+        pk2 = cactus_rs.G1Element()
         assert bytes(pk1) == bytes(pk2)
 
         sig1 = blspy.G2Element()
-        sig2 = chia_rs.G2Element()
+        sig2 = cactus_rs.G2Element()
         assert bytes(sig1) == bytes(sig2)
 
         ####  key_gen()  ####
         sk1 = blspy.AugSchemeMPL.key_gen(seed)
-        sk2 = chia_rs.AugSchemeMPL.key_gen(seed)
+        sk2 = cactus_rs.AugSchemeMPL.key_gen(seed)
         assert bytes(sk1) == bytes(sk2)
 
         ####  get_g1()  ####
@@ -53,30 +53,30 @@ def test_bls() -> None:
         ####  sign()  ####
         msg = randbytes(100)
         sig1 = blspy.AugSchemeMPL.sign(sk1, msg)
-        sig2 = chia_rs.AugSchemeMPL.sign(sk2, msg)
+        sig2 = cactus_rs.AugSchemeMPL.sign(sk2, msg)
         assert bytes(sig1) == bytes(sig2)
 
         ####  verify()  ####
         assert blspy.AugSchemeMPL.verify(pk1, msg, sig1) == True
-        assert chia_rs.AugSchemeMPL.verify(pk2, msg, sig2) == True
+        assert cactus_rs.AugSchemeMPL.verify(pk2, msg, sig2) == True
 
         ####  sign() (custom augment)  ####
         pk11 = blspy.AugSchemeMPL.derive_child_pk_unhardened(pk1, 1)
-        pk21 = chia_rs.AugSchemeMPL.derive_child_pk_unhardened(pk2, 1)
+        pk21 = cactus_rs.AugSchemeMPL.derive_child_pk_unhardened(pk2, 1)
         assert bytes(pk11) == bytes(pk21)
         sig1 = blspy.AugSchemeMPL.sign(sk1, msg, pk11)
-        sig2 = chia_rs.AugSchemeMPL.sign(sk2, msg, pk21)
+        sig2 = cactus_rs.AugSchemeMPL.sign(sk2, msg, pk21)
         assert bytes(sig1) == bytes(sig2)
 
         ####  derive_child_pk_unhardened()  ####
         ####  derive_child_sk_unhardened()  ####
         for idx in range(1000, 1020):
             pk11 = blspy.AugSchemeMPL.derive_child_pk_unhardened(pk1, idx)
-            pk21 = chia_rs.AugSchemeMPL.derive_child_pk_unhardened(pk2, idx)
+            pk21 = cactus_rs.AugSchemeMPL.derive_child_pk_unhardened(pk2, idx)
             assert bytes(pk11) == bytes(pk21)
 
             sk11 = blspy.AugSchemeMPL.derive_child_sk_unhardened(sk1, idx)
-            sk21 = chia_rs.AugSchemeMPL.derive_child_sk_unhardened(sk2, idx)
+            sk21 = cactus_rs.AugSchemeMPL.derive_child_sk_unhardened(sk2, idx)
             assert bytes(sk11) == bytes(sk21)
 
             assert bytes(pk11) == bytes(sk11.get_g1())
@@ -85,13 +85,13 @@ def test_bls() -> None:
         ####  derive_child_sk_hardened()  ####
         for idx in range(100, 120):
             sk11 = blspy.AugSchemeMPL.derive_child_sk(sk1, idx)
-            sk21 = chia_rs.AugSchemeMPL.derive_child_sk(sk2, idx)
+            sk21 = cactus_rs.AugSchemeMPL.derive_child_sk(sk2, idx)
             assert bytes(sk11) == bytes(sk21)
 
         ####  g2_from_message()  ####
         msg = randbytes(100)
         sig1 = blspy.AugSchemeMPL.g2_from_message(msg)
-        sig2 = chia_rs.AugSchemeMPL.g2_from_message(msg)
+        sig2 = cactus_rs.AugSchemeMPL.g2_from_message(msg)
         assert bytes(sig1) == bytes(sig2)
 
         ####  aggregate()  ####
@@ -100,10 +100,10 @@ def test_bls() -> None:
         for _ in range(10):
             msg = randbytes(100)
             sigs1.append(blspy.AugSchemeMPL.g2_from_message(msg))
-            sigs2.append(chia_rs.AugSchemeMPL.g2_from_message(msg))
+            sigs2.append(cactus_rs.AugSchemeMPL.g2_from_message(msg))
 
         aggsig1 = blspy.AugSchemeMPL.aggregate(sigs1)
-        aggsig2 = chia_rs.AugSchemeMPL.aggregate(sigs2)
+        aggsig2 = cactus_rs.AugSchemeMPL.aggregate(sigs2)
 
         assert bytes(aggsig1) == bytes(aggsig2)
 
@@ -120,10 +120,10 @@ def test_bls() -> None:
         assert pair2 == sig2.pair(pk2)
 
         # size constants
-        assert blspy.GTElement.SIZE == chia_rs.GTElement.SIZE
-        assert blspy.G1Element.SIZE == chia_rs.G1Element.SIZE
-        assert blspy.G2Element.SIZE == chia_rs.G2Element.SIZE
-        assert blspy.PrivateKey.PRIVATE_KEY_SIZE == chia_rs.PrivateKey.PRIVATE_KEY_SIZE
+        assert blspy.GTElement.SIZE == cactus_rs.GTElement.SIZE
+        assert blspy.G1Element.SIZE == cactus_rs.G1Element.SIZE
+        assert blspy.G2Element.SIZE == cactus_rs.G2Element.SIZE
+        assert blspy.PrivateKey.PRIVATE_KEY_SIZE == cactus_rs.PrivateKey.PRIVATE_KEY_SIZE
 
         # __repr__
         assert repr(sk1) == repr(sk2)
@@ -153,7 +153,7 @@ def test_bls() -> None:
 
         # GTElement from_bytes()
         pair12 = blspy.GTElement.from_bytes(bytes(pair1))
-        pair22 = chia_rs.GTElement.from_bytes(bytes(pair2))
+        pair22 = cactus_rs.GTElement.from_bytes(bytes(pair2))
 
         assert bytes(pair12) == bytes(pair22)
 
@@ -195,7 +195,7 @@ def test_bls() -> None:
             (pk2, G1Element),
             (sig2, G2Element),
             (sk2, PrivateKey),
-            (pair2, chia_rs.GTElement),
+            (pair2, cactus_rs.GTElement),
         ]:
             print(f"{klass}")
             # to_json_dict
@@ -220,13 +220,13 @@ def test_bls() -> None:
 
 # ------------------------------------- 8< ----------------------------------
 #
-# this is the original test from blspy, but converted to use chia_rs instead
+# this is the original test from blspy, but converted to use cactus_rs instead
 
 import binascii
 import time
 from copy import deepcopy
 
-from chia_rs import (
+from cactus_rs import (
     AugSchemeMPL,
     G1Element,
     G2Element,

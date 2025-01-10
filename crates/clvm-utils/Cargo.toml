@@ -4,15 +4,15 @@ version = "0.17.0"
 edition = "2021"
 license = "Apache-2.0"
 description = "Utility functions for processing clvm programs and structures"
-authors = ["Arvid Norberg <arvid@chia.net>"]
-homepage = "https://github.com/Chia-Network/chia_rs"
-repository = "https://github.com/Chia-Network/chia_rs"
+authors = ["Arvid Norberg <arvid@cactus-network.net>"]
+homepage = "https://github.com/Cactus-Network/cactus_rs"
+repository = "https://github.com/Cactus-Network/cactus_rs"
 
 [lints]
 workspace = true
 
 [dependencies]
-chia-sha2 = { workspace = true }
+cactus-sha2 = { workspace = true }
 clvmr = { workspace = true }
 clvm-traits = { workspace = true }
 hex = { workspace = true }

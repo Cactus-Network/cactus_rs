@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from chia_rs import run_chia_program
+from cactus_rs import run_cactus_program
 
 
 def run_clvm(fn, env=None):
@@ -10,13 +10,13 @@ def run_clvm(fn, env=None):
         env_data = bytes.fromhex(open(env, "r").read())
     else:
         env_data = bytes.fromhex("ff80")
-    # constants from the main chia blockchain:
-    # https://github.com/Chia-Network/chia-blockchain/blob/main/chia/consensus/default_constants.py
+    # constants from the main cactus blockchain:
+    # https://github.com/Cactus-Network/cactus-blockchain/blob/main/cactus/consensus/default_constants.py
     max_cost = 11000000000
     cost_per_byte = 12000
 
     max_cost -= (len(program_data) + len(env_data)) * cost_per_byte
-    return run_chia_program(
+    return run_cactus_program(
         program_data,
         env_data,
         max_cost,

@@ -1,9 +1,9 @@
-from chia_rs import Coin
+from cactus_rs import Coin
 from hashlib import sha256
 import copy
 import pytest
-from chia_rs.sized_ints import uint64
-from chia_rs.sized_bytes import bytes32
+from cactus_rs.sized_ints import uint64
+from cactus_rs.sized_bytes import bytes32
 
 parent_coin = b"---foo---                       "
 puzzle_hash = b"---bar---                       "

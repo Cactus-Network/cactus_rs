@@ -1,22 +1,22 @@
 use crate::run_generator::{
     additions_and_removals, py_to_slice, run_block_generator, run_block_generator2,
 };
-use chia_consensus::allocator::make_allocator;
-use chia_consensus::consensus_constants::ConsensusConstants;
-use chia_consensus::gen::flags::{
+use cactus_consensus::allocator::make_allocator;
+use cactus_consensus::consensus_constants::ConsensusConstants;
+use cactus_consensus::gen::flags::{
     ALLOW_BACKREFS, DONT_VALIDATE_SIGNATURE, MEMPOOL_MODE, NO_UNKNOWN_CONDS, STRICT_ARGS_COUNT,
 };
-use chia_consensus::gen::owned_conditions::{OwnedSpendBundleConditions, OwnedSpendConditions};
-use chia_consensus::gen::run_block_generator::setup_generator_args;
-use chia_consensus::gen::solution_generator::solution_generator as native_solution_generator;
-use chia_consensus::gen::solution_generator::solution_generator_backrefs as native_solution_generator_backrefs;
-use chia_consensus::merkle_set::compute_merkle_set_root as compute_merkle_root_impl;
-use chia_consensus::merkle_tree::{validate_merkle_proof, MerkleSet};
-use chia_consensus::spendbundle_conditions::get_conditions_from_spendbundle;
-use chia_consensus::spendbundle_validation::{
+use cactus_consensus::gen::owned_conditions::{OwnedSpendBundleConditions, OwnedSpendConditions};
+use cactus_consensus::gen::run_block_generator::setup_generator_args;
+use cactus_consensus::gen::solution_generator::solution_generator as native_solution_generator;
+use cactus_consensus::gen::solution_generator::solution_generator_backrefs as native_solution_generator_backrefs;
+use cactus_consensus::merkle_set::compute_merkle_set_root as compute_merkle_root_impl;
+use cactus_consensus::merkle_tree::{validate_merkle_proof, MerkleSet};
+use cactus_consensus::spendbundle_conditions::get_conditions_from_spendbundle;
+use cactus_consensus::spendbundle_validation::{
     get_flags_for_height_and_constants, validate_clvm_and_signature,
 };
-use chia_protocol::{
+use cactus_protocol::{
     BlockRecord, Bytes32, ChallengeBlockInfo, ChallengeChainSubSlot, ClassgroupElement, Coin,
     CoinSpend, CoinState, CoinStateFilters, CoinStateUpdate, EndOfSubSlotBundle, FeeEstimate,
     FeeEstimateGroup, FeeRate, Foliage, FoliageBlockData, FoliageTransactionBlock, FullBlock,
@@ -44,9 +44,9 @@ use chia_protocol::{
     SubSlotProofs, TimestampedPeerInfo, TransactionAck, TransactionsInfo, UnfinishedBlock,
     UnfinishedHeaderBlock, VDFInfo, VDFProof, WeightProof,
 };
-use chia_traits::ChiaToPython;
+use cactus_traits::CactusToPython;
 use clvm_utils::tree_hash_from_bytes;
-use clvmr::chia_dialect::{ENABLE_KECCAK, ENABLE_KECCAK_OPS_OUTSIDE_GUARD};
+use clvmr::cactus_dialect::{ENABLE_KECCAK, ENABLE_KECCAK_OPS_OUTSIDE_GUARD};
 use clvmr::{LIMIT_HEAP, NO_UNKNOWN_OPS};
 use pyo3::buffer::PyBuffer;
 use pyo3::exceptions::{PyRuntimeError, PyTypeError, PyValueError};
@@ -59,11 +59,11 @@ use pyo3::wrap_pyfunction;
 use std::collections::HashSet;
 use std::iter::zip;
 
-use crate::run_program::{run_chia_program, serialized_length};
+use crate::run_program::{run_cactus_program, serialized_length};
 
-use chia_consensus::fast_forward::fast_forward_singleton as native_ff;
-use chia_consensus::gen::get_puzzle_and_solution::get_puzzle_and_solution_for_coin as parse_puzzle_solution;
-use chia_consensus::gen::validation_error::ValidationErr;
+use cactus_consensus::fast_forward::fast_forward_singleton as native_ff;
+use cactus_consensus::gen::get_puzzle_and_solution::get_puzzle_and_solution_for_coin as parse_puzzle_solution;
+use cactus_consensus::gen::validation_error::ValidationErr;
 use clvmr::allocator::NodePtr;
 use clvmr::cost::Cost;
 use clvmr::reduction::EvalErr;
@@ -71,9 +71,9 @@ use clvmr::reduction::Reduction;
 use clvmr::run_program;
 use clvmr::serde::node_to_bytes;
 use clvmr::serde::{node_from_bytes, node_from_bytes_backrefs, node_from_bytes_backrefs_record};
-use clvmr::ChiaDialect;
+use clvmr::CactusDialect;
 
-use chia_bls::{
+use cactus_bls::{
     hash_to_g2 as native_hash_to_g2, BlsCache, DerivableKey, GTElement, PublicKey, SecretKey,
     Signature,
 };
@@ -118,7 +118,7 @@ pub fn confirm_not_included_already_hashed(
 #[pyfunction]
 pub fn tree_hash<'a>(py: Python<'a>, blob: PyBuffer<u8>) -> PyResult<Bound<'a, PyAny>> {
     let slice = py_to_slice::<'a>(blob);
-    ChiaToPython::to_python(&Bytes32::from(&tree_hash_from_bytes(slice)?.into()), py)
+    CactusToPython::to_python(&Bytes32::from(&tree_hash_from_bytes(slice)?.into()), py)
 }
 
 // there is an updated version of this function that doesn't require serializing
@@ -147,7 +147,7 @@ pub fn get_puzzle_and_solution_for_coin<'a>(
     };
     let program = deserialize(&mut allocator, program)?;
     let args = deserialize(&mut allocator, args)?;
-    let dialect = &ChiaDialect::new(flags);
+    let dialect = &CactusDialect::new(flags);
 
     let (puzzle, solution) = py
         .allow_threads(|| -> Result<(NodePtr, NodePtr), EvalErr> {
@@ -209,7 +209,7 @@ pub fn get_puzzle_and_solution_for_coin2<'a>(
     let (generator, backrefs) =
         node_from_bytes_backrefs_record(&mut allocator, generator.as_ref())?;
     let args = setup_generator_args(&mut allocator, refs)?;
-    let dialect = &ChiaDialect::new(flags);
+    let dialect = &CactusDialect::new(flags);
 
     let (puzzle, solution) = py
         .allow_threads(|| -> Result<(NodePtr, NodePtr), EvalErr> {
@@ -282,9 +282,9 @@ impl AugSchemeMPL {
             Some(prefix) => {
                 let mut aug_msg = prefix.to_bytes().to_vec();
                 aug_msg.extend_from_slice(msg);
-                chia_bls::sign_raw(pk, aug_msg)
+                cactus_bls::sign_raw(pk, aug_msg)
             }
-            None => chia_bls::sign(pk, msg),
+            None => cactus_bls::sign(pk, msg),
         }
     }
 
@@ -299,7 +299,7 @@ impl AugSchemeMPL {
 
     #[staticmethod]
     pub fn verify(py: Python<'_>, pk: &PublicKey, msg: &[u8], sig: &Signature) -> bool {
-        py.allow_threads(|| chia_bls::verify(sig, pk, msg))
+        py.allow_threads(|| cactus_bls::verify(sig, pk, msg))
     }
 
     #[staticmethod]
@@ -321,7 +321,7 @@ impl AugSchemeMPL {
             data.push((pk, msg));
         }
 
-        py.allow_threads(|| Ok(chia_bls::aggregate_verify(sig, data)))
+        py.allow_threads(|| Ok(cactus_bls::aggregate_verify(sig, data)))
     }
 
     #[staticmethod]
@@ -434,8 +434,8 @@ pub fn py_get_conditions_from_spendbundle(
     constants: &ConsensusConstants,
     height: u32,
 ) -> PyResult<OwnedSpendBundleConditions> {
-    use chia_consensus::allocator::make_allocator;
-    use chia_consensus::gen::owned_conditions::OwnedSpendBundleConditions;
+    use cactus_consensus::allocator::make_allocator;
+    use cactus_consensus::gen::owned_conditions::OwnedSpendBundleConditions;
     let mut a = make_allocator(LIMIT_HEAP);
     let conditions =
         get_conditions_from_spendbundle(&mut a, spend_bundle, max_cost, height, constants)
@@ -453,7 +453,7 @@ pub fn py_get_flags_for_height_and_constants(height: u32, constants: &ConsensusC
 }
 
 #[pymodule]
-pub fn chia_rs(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
+pub fn cactus_rs(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
     // generator functions
     m.add_function(wrap_pyfunction!(run_block_generator, m)?)?;
     m.add_function(wrap_pyfunction!(run_block_generator2, m)?)?;
@@ -465,11 +465,11 @@ pub fn chia_rs(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<OwnedSpendBundleConditions>()?;
     m.add(
         "ELIGIBLE_FOR_DEDUP",
-        chia_consensus::gen::conditions::ELIGIBLE_FOR_DEDUP,
+        cactus_consensus::gen::conditions::ELIGIBLE_FOR_DEDUP,
     )?;
     m.add(
         "ELIGIBLE_FOR_FF",
-        chia_consensus::gen::conditions::ELIGIBLE_FOR_FF,
+        cactus_consensus::gen::conditions::ELIGIBLE_FOR_FF,
     )?;
     m.add_class::<OwnedSpendConditions>()?;
 
@@ -493,7 +493,7 @@ pub fn chia_rs(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add("ALLOW_BACKREFS", ALLOW_BACKREFS)?;
     m.add("DONT_VALIDATE_SIGNATURE", DONT_VALIDATE_SIGNATURE)?;
 
-    // Chia classes
+    // Cactus classes
     m.add_class::<Coin>()?;
     m.add_class::<PoolTarget>()?;
     m.add_class::<ClassgroupElement>()?;
@@ -619,7 +619,7 @@ pub fn chia_rs(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
 
     // facilities from clvm_rs
 
-    m.add_function(wrap_pyfunction!(run_chia_program, m)?)?;
+    m.add_function(wrap_pyfunction!(run_cactus_program, m)?)?;
     m.add("NO_UNKNOWN_OPS", NO_UNKNOWN_OPS)?;
     m.add("LIMIT_HEAP", LIMIT_HEAP)?;
     m.add("ENABLE_KECCAK", ENABLE_KECCAK)?;
@@ -634,7 +634,7 @@ pub fn chia_rs(_py: Python<'_>, m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(get_puzzle_and_solution_for_coin, m)?)?;
     m.add_function(wrap_pyfunction!(get_puzzle_and_solution_for_coin2, m)?)?;
 
-    // facilities from chia-bls
+    // facilities from cactus-bls
 
     m.add_class::<PublicKey>()?;
     m.add_class::<Signature>()?;

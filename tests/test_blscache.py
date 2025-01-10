@@ -1,4 +1,4 @@
-from chia_rs import (
+from cactus_rs import (
     SpendBundle,
     CoinSpend,
     Program,
@@ -12,11 +12,11 @@ from chia_rs import (
     ConsensusConstants,
     validate_clvm_and_signature,
 )
-from chia_rs.sized_bytes import bytes32
-from chia_rs.sized_ints import uint8, uint16, uint32, uint64, uint128
-from chia.util.hash import std_hash
-from chia.util.lru_cache import LRUCache
-from chia.types.blockchain_format.program import Program as ChiaProgram
+from cactus_rs.sized_bytes import bytes32
+from cactus_rs.sized_ints import uint8, uint16, uint32, uint64, uint128
+from cactus.util.hash import std_hash
+from cactus.util.lru_cache import LRUCache
+from cactus.types.blockchain_format.program import Program as CactusProgram
 import pytest
 
 
@@ -305,7 +305,7 @@ def test_validate_clvm_and_sig():
     sig = AugSchemeMPL.sign(
         sk,
         (
-            ChiaProgram.to("hello").as_atom()
+            CactusProgram.to("hello").as_atom()
             + coin.name()
             + DEFAULT_CONSTANTS.AGG_SIG_ME_ADDITIONAL_DATA
         ),  # noqa

@@ -1,16 +1,14 @@
 [package]
-name = "chia"
+name = "cactus"
 version = "0.17.0"
-edition = "2021"
+edition = "2025"
 license = "Apache-2.0"
-description = "A meta-crate that exports all of the Chia crates in the workspace."
+description = "A meta-crate that exports all of the Cactus crates in the workspace."
 authors = [
-    "Richard Kiss <him@richardkiss.com>",
-    "Arvid Norberg <arvid@chia.net>",
-    "Brandon Haggstrom <b.haggstrom@chia.net>"
+    "Dommer <dommer@cactus-network.net>",
 ]
-homepage = "https://github.com/Chia-Network/chia_rs"
-repository = "https://github.com/Chia-Network/chia_rs"
+homepage = "https://github.com/Cactus-Network/cactus_rs"
+repository = "https://github.com/Cactus-Network/cactus_rs"
 
 [workspace]
 members = ["crates/*", "crates/*/fuzz", "wasm", "wheel"]
@@ -51,15 +49,15 @@ similar_names = "allow"
 implicit_hasher = "allow"
 
 [dependencies]
-chia-bls = { workspace = true, optional = true }
-chia-secp = { workspace = true, optional = true }
-chia-client = { workspace = true, optional = true }
-chia-consensus = { workspace = true, optional = true }
-chia-protocol = { workspace = true, optional = true }
-chia-ssl = { workspace = true, optional = true }
-chia-traits = { workspace = true, optional = true }
-chia-puzzles = { workspace = true, optional = true }
-chia-sha2 = { workspace = true, optional = true }
+cactus-bls = { workspace = true, optional = true }
+cactus-secp = { workspace = true, optional = true }
+cactus-client = { workspace = true, optional = true }
+cactus-consensus = { workspace = true, optional = true }
+cactus-protocol = { workspace = true, optional = true }
+cactus-ssl = { workspace = true, optional = true }
+cactus-traits = { workspace = true, optional = true }
+cactus-puzzles = { workspace = true, optional = true }
+cactus-sha2 = { workspace = true, optional = true }
 clvm-traits = { workspace = true, optional = true }
 clvm-utils = { workspace = true, optional = true }
 clvmr = { workspace = true }
@@ -84,42 +82,42 @@ default = [
     "clvm-utils"
 ]
 
-bls = ["dep:chia-bls", "clvm-traits/chia-bls"]
-secp = ["dep:chia-secp", "clvm-traits/chia-secp"]
-client = ["dep:chia-client"]
-consensus = ["dep:chia-consensus"]
-protocol = ["dep:chia-protocol"]
-ssl = ["dep:chia-ssl"]
-traits = ["dep:chia-traits"]
-puzzles = ["dep:chia-puzzles"]
-sha2 = ["dep:chia-sha2"]
+bls = ["dep:cactus-bls", "clvm-traits/cactus-bls"]
+secp = ["dep:cactus-secp", "clvm-traits/cactus-secp"]
+client = ["dep:cactus-client"]
+consensus = ["dep:cactus-consensus"]
+protocol = ["dep:cactus-protocol"]
+ssl = ["dep:cactus-ssl"]
+traits = ["dep:cactus-traits"]
+puzzles = ["dep:cactus-puzzles"]
+sha2 = ["dep:cactus-sha2"]
 clvm-traits = ["dep:clvm-traits"]
 clvm-utils = ["dep:clvm-utils"]
 
-openssl = ["chia-sha2/openssl", "clvmr/openssl"]
+openssl = ["cactus-sha2/openssl", "clvmr/openssl"]
 
 [profile.release]
 lto = "thin"
 
 [workspace.dependencies]
-chia_py_streamable_macro = { path = "./crates/chia_py_streamable_macro", version = "0.17.0" }
-chia_streamable_macro = { path = "./crates/chia_streamable_macro", version = "0.17.0" }
-chia-bls = { path = "./crates/chia-bls", version = "0.17.0" }
-chia-client = { path = "./crates/chia-client", version = "0.17.0" }
-chia-consensus = { path = "./crates/chia-consensus", version = "0.17.0" }
-chia-protocol = { path = "./crates/chia-protocol", version = "0.17.0" }
-chia-secp = { path = "./crates/chia-secp", version = "0.17.0" }
-chia-ssl = { path = "./crates/chia-ssl", version = "0.17.0" }
-chia-traits = { path = "./crates/chia-traits", version = "0.17.0" }
-chia-puzzles = { path = "./crates/chia-puzzles", version = "0.17.0" }
-chia-sha2 = { path = "./crates/chia-sha2", version = "0.17.0" }
+cactus_py_streamable_macro = { path = "./crates/cactus_py_streamable_macro", version = "0.17.0" }
+cactus_streamable_macro = { path = "./crates/cactus_streamable_macro", version = "0.17.0" }
+cactus-bls = { path = "./crates/cactus-bls", version = "0.17.0" }
+cactus-client = { path = "./crates/cactus-client", version = "0.17.0" }
+cactus-consensus = { path = "./crates/cactus-consensus", version = "0.17.0" }
+cactus-protocol = { path = "./crates/cactus-protocol", version = "0.17.0" }
+cactus-secp = { path = "./crates/cactus-secp", version = "0.17.0" }
+cactus-ssl = { path = "./crates/cactus-ssl", version = "0.17.0" }
+cactus-traits = { path = "./crates/cactus-traits", version = "0.17.0" }
+cactus-puzzles = { path = "./crates/cactus-puzzles", version = "0.17.0" }
+cactus-sha2 = { path = "./crates/cactus-sha2", version = "0.17.0" }
 clvm-traits = { path = "./crates/clvm-traits", version = "0.17.0" }
 clvm-utils = { path = "./crates/clvm-utils", version = "0.17.0" }
 clvm-derive = { path = "./crates/clvm-derive", version = "0.17.0" }
-chia-fuzz = { path = "./crates/chia-consensus/fuzz", version = "0.16.0" }
-chia-bls-fuzz = { path = "./crates/chia-bls/fuzz", version = "0.16.0" }
-chia-protocol-fuzz = { path = "./crates/chia-protocol/fuzz", version = "0.16.0" }
-chia-puzzles-fuzz = { path = "./crates/chia-puzzles/fuzz", version = "0.16.0" }
+cactus-fuzz = { path = "./crates/cactus-consensus/fuzz", version = "0.16.0" }
+cactus-bls-fuzz = { path = "./crates/cactus-bls/fuzz", version = "0.16.0" }
+cactus-protocol-fuzz = { path = "./crates/cactus-protocol/fuzz", version = "0.16.0" }
+cactus-puzzles-fuzz = { path = "./crates/cactus-puzzles/fuzz", version = "0.16.0" }
 clvm-traits-fuzz = { path = "./crates/clvm-traits/fuzz", version = "0.16.0" }
 clvm-utils-fuzz = { path = "./crates/clvm-utils/fuzz", version = "0.16.0" }
 blst = { version = "0.3.12", features = ["portable"] }

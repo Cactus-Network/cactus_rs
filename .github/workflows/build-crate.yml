@@ -77,19 +77,19 @@ jobs:
       - name: Install cargo-fuzz
         run: cargo +nightly install cargo-fuzz
 
-      - name: Fuzz (chia-consensus)
+      - name: Fuzz (cactus-consensus)
         run: |
-          cd crates/chia-consensus
+          cd crates/cactus-consensus
           cargo fuzz list | xargs -I "%" sh -c "cargo +nightly fuzz run % -- -max_total_time=20 || exit 255"
 
-      - name: Fuzz (chia-bls)
+      - name: Fuzz (cactus-bls)
         env:
           # We disable leak reports here because blspy appears to be allocating
           # memory that's not freed. It might be a false positive since python is
           # not unloaded before exiting.
           LSAN_OPTIONS: detect_leaks=0
         run: |
-          cd crates/chia-bls
+          cd crates/cactus-bls
           python -m pip install blspy
           cargo fuzz list | xargs -I "%" sh -c "cargo +nightly fuzz run % -- -max_total_time=10 || exit 255"
 
@@ -98,14 +98,14 @@ jobs:
           cd crates/clvm-utils
           cargo fuzz list | xargs -I "%" sh -c "cargo +nightly fuzz run % -- -max_total_time=20 || exit 255"
 
-      - name: Fuzz (chia-protocol)
+      - name: Fuzz (cactus-protocol)
         run: |
-          cd crates/chia-protocol
+          cd crates/cactus-protocol
           cargo fuzz list | xargs -I "%" sh -c "cargo +nightly fuzz run % -- -max_total_time=20 || exit 255"
 
-      - name: Fuzz (chia-puzzles)
+      - name: Fuzz (cactus-puzzles)
         run: |
-          cd crates/chia-puzzles
+          cd crates/cactus-puzzles
           cargo fuzz list | xargs -I "%" sh -c "cargo +nightly fuzz run % -- -max_total_time=20 || exit 255"
 
       - name: Fuzz (clvm-traits)

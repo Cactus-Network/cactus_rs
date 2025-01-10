@@ -1,3 +1,3 @@
-from chia_rs import SpendConditions
+from cactus_rs import SpendConditions
 
 Spend = SpendConditions

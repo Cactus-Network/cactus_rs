@@ -1,9 +1,9 @@
 from typing import Optional
 
 import string
-import chia_rs
-from chia.types.blockchain_format.program import Program as ChiaProgram
-from chia.types.blockchain_format.serialized_program import SerializedProgram
+import cactus_rs
+from cactus.types.blockchain_format.program import Program as CactusProgram
+from cactus.types.blockchain_format.serialized_program import SerializedProgram
 from random import Random
 
 
@@ -32,12 +32,12 @@ def rand_list(rnd: Random) -> list:
     return ret
 
 
-def rand_program(rnd: Random) -> ChiaProgram:
-    return ChiaProgram.from_bytes(b"\xff\x01\xff\x04\x01")
+def rand_program(rnd: Random) -> CactusProgram:
+    return CactusProgram.from_bytes(b"\xff\x01\xff\x04\x01")
 
 
-def rand_rust_program(rnd: Random) -> chia_rs.Program:
-    return chia_rs.Program.from_bytes(b"\xff\x01\xff\x04\x01")
+def rand_rust_program(rnd: Random) -> cactus_rs.Program:
+    return cactus_rs.Program.from_bytes(b"\xff\x01\xff\x04\x01")
 
 
 def rand_optional(rnd: Random) -> Optional[object]:
@@ -65,7 +65,7 @@ def recursive_replace(o: object) -> object:
         for i in o:
             ret.append(recursive_replace(i))
         return ret
-    elif isinstance(o, chia_rs.Program):
+    elif isinstance(o, cactus_rs.Program):
         return SerializedProgram.from_bytes(o.to_bytes())
     else:
         return o
@@ -73,7 +73,7 @@ def recursive_replace(o: object) -> object:
 
 def test_run_program() -> None:
 
-    rust_identity = chia_rs.Program.from_bytes(b"\x01")
+    rust_identity = cactus_rs.Program.from_bytes(b"\x01")
     py_identity = SerializedProgram.from_bytes(b"\x01")
 
     rnd = Random()
@@ -97,8 +97,8 @@ def test_tree_hash() -> None:
 
     rnd = Random()
     for _ in range(10000):
-        py_prg = ChiaProgram.to(rand_object(rnd))
-        rust_prg = chia_rs.Program.from_bytes(bytes(py_prg))
+        py_prg = CactusProgram.to(rand_object(rnd))
+        rust_prg = cactus_rs.Program.from_bytes(bytes(py_prg))
 
         assert py_prg.get_tree_hash() == rust_prg.get_tree_hash()
 
@@ -107,13 +107,13 @@ def test_uncurry() -> None:
 
     rnd = Random()
     for _ in range(10000):
-        py_prg = ChiaProgram.to(rand_object(rnd))
+        py_prg = CactusProgram.to(rand_object(rnd))
         py_prg = py_prg.curry(rand_object(rnd))
-        rust_prg = chia_rs.Program.from_program(py_prg)
+        rust_prg = cactus_rs.Program.from_program(py_prg)
         assert py_prg.uncurry() == rust_prg.uncurry()
 
         py_prg = py_prg.curry(rand_object(rnd), rand_object(rnd))
-        rust_prg = chia_rs.Program.from_program(py_prg)
+        rust_prg = cactus_rs.Program.from_program(py_prg)
         assert py_prg.uncurry() == rust_prg.uncurry()
 
 
@@ -122,9 +122,9 @@ def test_round_trip() -> None:
     rnd = Random()
     for _ in range(10000):
         obj = rand_object(rnd)
-        py_prg = ChiaProgram.to(obj)
-        rust_prg = chia_rs.Program.from_program(py_prg)
-        rust_prg2 = chia_rs.Program.to(obj)
+        py_prg = CactusProgram.to(obj)
+        rust_prg = cactus_rs.Program.from_program(py_prg)
+        rust_prg2 = cactus_rs.Program.to(obj)
 
         assert py_prg == rust_prg.to_program()
         assert py_prg == rust_prg2.to_program()

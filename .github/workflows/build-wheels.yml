@@ -46,11 +46,11 @@ jobs:
             by-arch:
               arm:
                 manylinux-version: 2_28
-                docker-url: ghcr.io/chia-network/build-images/centos-pypa-rust-aarch64
+                docker-url: ghcr.io/cactus-network/build-images/centos-pypa-rust-aarch64
                 rustup-target: aarch64-unknown-linux-musl
               intel:
                 manylinux-version: 2_28
-                docker-url: ghcr.io/chia-network/build-images/centos-pypa-rust-x86_64
+                docker-url: ghcr.io/cactus-network/build-images/centos-pypa-rust-x86_64
                 rustup-target: x86_64-unknown-linux-musl
             matrix: "3.9"
           - major-dot-minor: "3.10"
@@ -58,11 +58,11 @@ jobs:
             by-arch:
               arm:
                 manylinux-version: 2_28
-                docker-url: ghcr.io/chia-network/build-images/centos-pypa-rust-aarch64
+                docker-url: ghcr.io/cactus-network/build-images/centos-pypa-rust-aarch64
                 rustup-target: aarch64-unknown-linux-musl
               intel:
                 manylinux-version: 2_28
-                docker-url: ghcr.io/chia-network/build-images/centos-pypa-rust-x86_64
+                docker-url: ghcr.io/cactus-network/build-images/centos-pypa-rust-x86_64
                 rustup-target: x86_64-unknown-linux-musl
             matrix: "3.10"
           - major-dot-minor: "3.11"
@@ -70,11 +70,11 @@ jobs:
             by-arch:
               arm:
                 manylinux-version: 2_28
-                docker-url: ghcr.io/chia-network/build-images/centos-pypa-rust-aarch64
+                docker-url: ghcr.io/cactus-network/build-images/centos-pypa-rust-aarch64
                 rustup-target: aarch64-unknown-linux-musl
               intel:
                 manylinux-version: 2_28
-                docker-url: ghcr.io/chia-network/build-images/centos-pypa-rust-x86_64
+                docker-url: ghcr.io/cactus-network/build-images/centos-pypa-rust-x86_64
                 rustup-target: x86_64-unknown-linux-musl
             matrix: "3.11"
           - major-dot-minor: "3.12"
@@ -82,11 +82,11 @@ jobs:
             by-arch:
               arm:
                 manylinux-version: 2_28
-                docker-url: ghcr.io/chia-network/build-images/centos-pypa-rust-aarch64
+                docker-url: ghcr.io/cactus-network/build-images/centos-pypa-rust-aarch64
                 rustup-target: aarch64-unknown-linux-musl
               intel:
                 manylinux-version: 2_28
-                docker-url: ghcr.io/chia-network/build-images/centos-pypa-rust-x86_64
+                docker-url: ghcr.io/cactus-network/build-images/centos-pypa-rust-x86_64
                 rustup-target: x86_64-unknown-linux-musl
             matrix: "3.12"
 
@@ -111,14 +111,14 @@ jobs:
 
     steps:
       - name: Clean workspace
-        uses: Chia-Network/actions/clean-workspace@main
+        uses: Cactus-Network/actions/clean-workspace@main
 
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - uses: Chia-Network/actions/setup-python@main
+      - uses: Cactus-Network/actions/setup-python@main
         with:
           python-version: ${{ matrix.python.major-dot-minor }}
 
@@ -169,18 +169,18 @@ jobs:
           . .\venv\Scripts\Activate.ps1
           maturin build -i python --release -m wheel/Cargo.toml
 
-      - uses: Chia-Network/actions/create-venv@main
+      - uses: Cactus-Network/actions/create-venv@main
         id: create-venv
 
-      - uses: Chia-Network/actions/activate-venv@main
+      - uses: Cactus-Network/actions/activate-venv@main
         with:
           directories: ${{ steps.create-venv.outputs.activate-venv-directories }}
 
-      - name: Install chia_rs wheel
+      - name: Install cactus_rs wheel
         shell: bash
         run: |
           TMP_DEST=$(mktemp -d)
-          pip download --no-index --no-deps --only-binary :all: --find-links target/wheels/ --dest "${TMP_DEST}" chia_rs
+          pip download --no-index --no-deps --only-binary :all: --find-links target/wheels/ --dest "${TMP_DEST}" cactus_rs
           echo ====
           ls -l "${TMP_DEST}"
           echo ====
@@ -194,7 +194,7 @@ jobs:
           path: ./target/wheels/
 
   check-typestubs:
-    name: Check chia_rs.pyi
+    name: Check cactus_rs.pyi
     runs-on: ubuntu-latest
 
     steps:
@@ -203,9 +203,9 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: Chia-Network/actions/setup-python@main
+      - uses: Cactus-Network/actions/setup-python@main
 
-      - name: check generated chia_rs.pyi
+      - name: check generated cactus_rs.pyi
         run: |
           python wheel/generate_type_stubs.py
           git diff --exit-code
@@ -231,14 +231,14 @@ jobs:
 
     steps:
       - name: Clean workspace
-        uses: Chia-Network/actions/clean-workspace@main
+        uses: Cactus-Network/actions/clean-workspace@main
 
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - uses: Chia-Network/actions/setup-python@main
+      - uses: Cactus-Network/actions/setup-python@main
         with:
           python-version: ${{ matrix.python.major-dot-minor }}
 
@@ -247,13 +247,13 @@ jobs:
           pip install maturin
           maturin sdist -m wheel/Cargo.toml
           cd target/wheels
-          dirname=`basename chia_rs*.tar.gz .tar.gz`
+          dirname=`basename cactus_rs*.tar.gz .tar.gz`
           echo $dirname
           mkdir $dirname
           cp -r ../../src/ $dirname/src/
-          gunzip chia_rs*.tar.gz
-          tar rvf chia_rs*.tar $dirname/src
-          gzip chia_rs*.tar
+          gunzip cactus_rs*.tar.gz
+          tar rvf cactus_rs*.tar $dirname/src
+          gzip cactus_rs*.tar
           rm -rf $dirname
 
       - name: Upload artifacts
@@ -316,7 +316,7 @@ jobs:
         run: |
           cargo install grcov --locked
           echo "RUSTFLAGS=-Cinstrument-coverage" >> "$GITHUB_ENV"
-          echo "LLVM_PROFILE_FILE=$(pwd)/target/chia_rs-%p-%m.profraw" >> "$GITHUB_ENV"
+          echo "LLVM_PROFILE_FILE=$(pwd)/target/cactus_rs-%p-%m.profraw" >> "$GITHUB_ENV"
           echo "CARGO_TARGET_DIR=$(pwd)/target" >> "$GITHUB_ENV"
       - name: cargo test
         run: cargo test --workspace --all-features
@@ -330,9 +330,9 @@ jobs:
           rustup component add llvm-tools-preview
           python -m venv venv
           source venv/bin/activate
-          git clone https://github.com/Chia-Network/clvm_tools.git --branch=main --single-branch
+          git clone https://github.com/Cactus-Network/clvm_tools.git --branch=main --single-branch
           pip install ./clvm_tools
-          pip install colorama maturin pytest pytest-xdist chia-blockchain==2.1.2 clvm==0.9.8
+          pip install colorama maturin pytest pytest-xdist cactus-blockchain==2.1.2 clvm==0.9.8
           maturin develop --release -m wheel/Cargo.toml
           # run pytest in a single process to avoid a race writing the coverage report
           pytest -n 0 tests
@@ -373,14 +373,14 @@ jobs:
 
     steps:
       - name: Clean workspace
-        uses: Chia-Network/actions/clean-workspace@main
+        uses: Cactus-Network/actions/clean-workspace@main
 
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - uses: Chia-Network/actions/setup-python@main
+      - uses: Cactus-Network/actions/setup-python@main
         with:
           python-version: ${{ matrix.python.major-dot-minor }}
 
@@ -392,7 +392,7 @@ jobs:
           path: ./dist
 
       - name: Set Env
-        uses: Chia-Network/actions/setjobenv@main
+        uses: Cactus-Network/actions/setjobenv@main
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

@@ -1,0 +1,58 @@
+[package]
+name = "cactus-bls"
+version = "0.17.0"
+edition = "2025"
+license = "Apache-2.0"
+description = "BLS signature, verification and aggregation functions for the Cactus blockchain"
+authors = ["Dommer <dommer@cactus-network.net>"]
+homepage = "https://github.com/Cactus-Network/cactus_rs"
+repository = "https://github.com/Cactus-Network/cactus_rs"
+
+[lints]
+workspace = true
+
+[features]
+py-bindings = ["dep:pyo3", "cactus_py_streamable_macro", "cactus-traits/py-bindings"]
+arbitrary = ["dep:arbitrary"]
+
+[dependencies]
+cactus-traits = { workspace = true }
+cactus-sha2 = { workspace = true }
+cactus_py_streamable_macro = { workspace = true, optional = true }
+sha2 = { workspace = true }
+hkdf = { workspace = true }
+blst = { workspace = true }
+hex = { workspace = true }
+thiserror = { workspace = true }
+pyo3 = { workspace = true, features = ["multiple-pymethods"], optional = true }
+arbitrary = { workspace = true, optional = true }
+linked-hash-map = "0.5.6"
+
+[dev-dependencies]
+rand = { workspace = true }
+criterion = { workspace = true }
+rstest = { workspace = true }
+
+[lib]
+crate-type = ["rlib"]
+bench = false
+
+[[bench]]
+name = "derive_key"
+harness = false
+
+[[bench]]
+name = "sign"
+harness = false
+
+[[bench]]
+name = "verify"
+harness = false
+
+[[bench]]
+name = "parse"
+harness = false
+
+[[bench]]
+name = "cache"
+harness = false
