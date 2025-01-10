@@ -11,7 +11,7 @@ use cactus_bls::PublicKey;
 use cactus_protocol::{Bytes, SpendBundle};
 use clvm_utils::tree_hash;
 use clvmr::allocator::Allocator;
-use clvmr::cactus_dialect::CactusDialect;
+use clvmr::chia_dialect::ChiaDialect;
 use clvmr::reduction::Reduction;
 use clvmr::run_program::run_program;
 use clvmr::serde::node_from_bytes;
@@ -52,7 +52,7 @@ pub fn run_spendbundle(
     // below is an adapted version of the code from run_block_generators::run_block_generator2()
     // it assumes no block references are passed in
     let mut cost_left = max_cost;
-    let dialect = CactusDialect::new(flags);
+    let dialect = ChiaDialect::new(flags);
     let mut ret = SpendBundleConditions::default();
     let mut state = ParseState::default();
     // We don't pay the size cost (nor execution cost) of being wrapped by a
@@ -108,7 +108,7 @@ mod tests {
     use cactus_bls::Signature;
     use cactus_protocol::CoinSpend;
     use cactus_traits::Streamable;
-    use clvmr::cactus_dialect::LIMIT_HEAP;
+    use clvmr::chia_dialect::LIMIT_HEAP;
     use rstest::rstest;
     use std::fs::read;
 
@@ -220,7 +220,7 @@ mod tests {
 
         let generator = node_from_bytes_backrefs(&mut a, generator).expect("node_from_bytes");
         let args = setup_generator_args(&mut a, block_refs).expect("setup_generator_args");
-        let dialect = CactusDialect::new(DEFAULT_FLAGS);
+        let dialect = ChiaDialect::new(DEFAULT_FLAGS);
         let Reduction(_, mut all_spends) =
             run_program(&mut a, &dialect, generator, args, 11_000_000_000).expect("run_program");
 

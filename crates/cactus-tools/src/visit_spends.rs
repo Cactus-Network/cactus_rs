@@ -5,7 +5,7 @@ use cactus_protocol::Bytes32;
 use cactus_protocol::FullBlock;
 use cactus_traits::streamable::Streamable;
 use clvmr::allocator::NodePtr;
-use clvmr::cactus_dialect::CactusDialect;
+use clvmr::chia_dialect::ChiaDialect;
 use clvmr::reduction::Reduction;
 use clvmr::run_program::run_program;
 use clvmr::serde::{node_from_bytes, node_from_bytes_backrefs};
@@ -113,7 +113,7 @@ pub fn visit_spends<
     let mut args = a.new_pair(blocks, a.nil())?;
     args = a.new_pair(clvm_deserializer, args)?;
 
-    let dialect = CactusDialect::new(0);
+    let dialect = ChiaDialect::new(0);
 
     let Reduction(_, mut all_spends) = run_program(a, &dialect, program, args, max_cost)?;
 

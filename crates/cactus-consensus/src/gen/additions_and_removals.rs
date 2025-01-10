@@ -9,7 +9,7 @@ use cactus_protocol::{Bytes, Bytes32};
 use clvm_traits::FromClvm;
 use clvm_utils::{tree_hash_cached, TreeHash};
 use clvmr::allocator::NodePtr;
-use clvmr::cactus_dialect::CactusDialect;
+use clvmr::chia_dialect::ChiaDialect;
 use clvmr::reduction::Reduction;
 use clvmr::run_program::run_program;
 use clvmr::serde::node_from_bytes_backrefs_record;
@@ -37,7 +37,7 @@ where
     let (program, backrefs) = node_from_bytes_backrefs_record(&mut a, program)?;
 
     let args = setup_generator_args(&mut a, block_refs)?;
-    let dialect = CactusDialect::new(flags);
+    let dialect = ChiaDialect::new(flags);
 
     let Reduction(clvm_cost, mut all_spends) =
         run_program(&mut a, &dialect, program, args, cost_left)?;

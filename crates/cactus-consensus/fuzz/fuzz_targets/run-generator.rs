@@ -5,7 +5,7 @@ use cactus_consensus::consensus_constants::TEST_CONSTANTS;
 use cactus_consensus::gen::flags::ALLOW_BACKREFS;
 use cactus_consensus::gen::run_block_generator::{run_block_generator, run_block_generator2};
 use cactus_consensus::gen::validation_error::{ErrorCode, ValidationErr};
-use clvmr::cactus_dialect::LIMIT_HEAP;
+use clvmr::chia_dialect::LIMIT_HEAP;
 use libfuzzer_sys::fuzz_target;
 
 fuzz_target!(|data: &[u8]| {

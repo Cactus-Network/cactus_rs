@@ -78,7 +78,7 @@ mod tests {
     use super::*;
     use crate::allocator::make_allocator;
     use crate::consensus_constants::TEST_CONSTANTS;
-    use clvmr::cactus_dialect::LIMIT_HEAP;
+    use clvmr::chia_dialect::LIMIT_HEAP;
     use clvmr::Allocator;
     use hex_literal::hex;
     use rstest::rstest;

@@ -11,7 +11,7 @@ use clvmr::serde::{
     node_from_bytes, node_from_bytes_backrefs, node_to_bytes, serialized_length_from_bytes,
     serialized_length_from_bytes_trusted,
 };
-use clvmr::{Allocator, CactusDialect};
+use clvmr::{Allocator, ChiaDialect};
 #[cfg(feature = "py-bindings")]
 use pyo3::prelude::*;
 #[cfg(feature = "py-bindings")]
@@ -73,7 +73,7 @@ impl Program {
         })?;
         let program =
             node_from_bytes_backrefs(a, self.0.as_ref()).expect("invalid SerializedProgram");
-        let dialect = CactusDialect::new(flags);
+        let dialect = ChiaDialect::new(flags);
         let reduction = run_program(a, &dialect, program, arg, max_cost)?;
         Ok((reduction.0, reduction.1))
     }
@@ -387,7 +387,7 @@ impl Program {
 
         let r: Response = (|| -> PyResult<Response> {
             let program = node_from_bytes_backrefs(&mut a, self.0.as_ref())?;
-            let dialect = CactusDialect::new(flags);
+            let dialect = ChiaDialect::new(flags);
 
             Ok(py.allow_threads(|| run_program(&mut a, &dialect, program, clvm_args, max_cost)))
         })()?;

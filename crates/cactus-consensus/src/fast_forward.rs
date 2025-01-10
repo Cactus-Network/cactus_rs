@@ -169,7 +169,7 @@ mod tests {
     use clvm_traits::ToClvm;
     use clvm_utils::tree_hash;
     use clvmr::allocator::Allocator;
-    use clvmr::cactus_dialect::CactusDialect;
+    use clvmr::chia_dialect::ChiaDialect;
     use clvmr::reduction::Reduction;
     use clvmr::run_program::run_program;
     use clvmr::serde::{node_from_bytes, node_to_bytes};
@@ -188,7 +188,7 @@ mod tests {
         let puzzle = node_from_bytes(a, puzzle)?;
         let solution = node_from_bytes(a, solution)?;
 
-        let dialect = CactusDialect::new(0);
+        let dialect = ChiaDialect::new(0);
         let max_cost = 11_000_000_000;
         let Reduction(clvm_cost, conditions) =
             run_program(a, &dialect, puzzle, solution, max_cost)?;

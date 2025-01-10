@@ -264,7 +264,7 @@ fn main() {
     use cactus_consensus::gen::validation_error::{first, rest};
     use cactus_protocol::CoinSpend;
     use clvmr::reduction::{EvalErr, Reduction};
-    use clvmr::{run_program, CactusDialect};
+    use clvmr::{run_program, ChiaDialect};
     use std::fs::read;
 
     let args = Args::parse();
@@ -284,7 +284,7 @@ fn main() {
 
     println!("Spending {:?}", &spend.coin);
     println!("   coin-id: {}\n", hex::encode(spend.coin.coin_id()));
-    let dialect = CactusDialect::new(0);
+    let dialect = ChiaDialect::new(0);
     let Reduction(_clvm_cost, conditions) =
         match run_program(&mut a, &dialect, puzzle, solution, 11_000_000_000) {
             Ok(r) => r,

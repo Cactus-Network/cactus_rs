@@ -8,7 +8,7 @@ use cactus_bls::GTElement;
 use cactus_bls::{aggregate_verify_gt, hash_to_g2};
 use cactus_protocol::SpendBundle;
 use cactus_sha2::Sha256;
-use clvmr::cactus_dialect::ENABLE_KECCAK;
+use clvmr::chia_dialect::ENABLE_KECCAK;
 use clvmr::LIMIT_HEAP;
 use std::time::{Duration, Instant};
 

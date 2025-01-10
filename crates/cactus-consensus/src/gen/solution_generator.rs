@@ -111,7 +111,7 @@ mod tests {
     use super::*;
     use cactus_protocol::Program;
     use cactus_traits::Streamable;
-    use clvmr::{run_program, CactusDialect};
+    use clvmr::{run_program, ChiaDialect};
     use hex_literal::hex;
     use rstest::rstest;
 
@@ -146,7 +146,7 @@ mod tests {
     const SOLUTION2: [u8; 1] = hex!("80");
 
     fn run_generator(program: &[u8]) -> Vec<u8> {
-        let dialect = CactusDialect::new(0);
+        let dialect = ChiaDialect::new(0);
         let mut a = Allocator::new();
         let program = node_from_bytes_backrefs(&mut a, program).expect("node_from_bytes");
         let env = a.nil();

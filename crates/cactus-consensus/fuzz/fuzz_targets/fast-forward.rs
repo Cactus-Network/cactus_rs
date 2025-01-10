@@ -19,7 +19,7 @@ use hex_literal::hex;
 use libfuzzer_sys::fuzz_target;
 use std::io::Cursor;
 
-use clvmr::cactus_dialect::CactusDialect;
+use clvmr::chia_dialect::ChiaDialect;
 use clvmr::reduction::Reduction;
 use clvmr::run_program::run_program;
 use std::sync::Arc;
@@ -84,7 +84,7 @@ fn run_puzzle(
     let puzzle = node_from_bytes(a, puzzle)?;
     let solution = node_from_bytes(a, solution)?;
 
-    let dialect = CactusDialect::new(0);
+    let dialect = ChiaDialect::new(0);
     let max_cost = 11_000_000_000;
     let Reduction(clvm_cost, conditions) = run_program(a, &dialect, puzzle, solution, max_cost)?;
 

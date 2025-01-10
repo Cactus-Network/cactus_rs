@@ -46,7 +46,7 @@ use cactus_protocol::{
 };
 use cactus_traits::CactusToPython;
 use clvm_utils::tree_hash_from_bytes;
-use clvmr::cactus_dialect::{ENABLE_KECCAK, ENABLE_KECCAK_OPS_OUTSIDE_GUARD};
+use clvmr::chia_dialect::{ENABLE_KECCAK, ENABLE_KECCAK_OPS_OUTSIDE_GUARD};
 use clvmr::{LIMIT_HEAP, NO_UNKNOWN_OPS};
 use pyo3::buffer::PyBuffer;
 use pyo3::exceptions::{PyRuntimeError, PyTypeError, PyValueError};
@@ -71,7 +71,7 @@ use clvmr::reduction::Reduction;
 use clvmr::run_program;
 use clvmr::serde::node_to_bytes;
 use clvmr::serde::{node_from_bytes, node_from_bytes_backrefs, node_from_bytes_backrefs_record};
-use clvmr::CactusDialect;
+use clvmr::ChiaDialect;
 
 use cactus_bls::{
     hash_to_g2 as native_hash_to_g2, BlsCache, DerivableKey, GTElement, PublicKey, SecretKey,
@@ -147,7 +147,7 @@ pub fn get_puzzle_and_solution_for_coin<'a>(
     };
     let program = deserialize(&mut allocator, program)?;
     let args = deserialize(&mut allocator, args)?;
-    let dialect = &CactusDialect::new(flags);
+    let dialect = &ChiaDialect::new(flags);
 
     let (puzzle, solution) = py
         .allow_threads(|| -> Result<(NodePtr, NodePtr), EvalErr> {
@@ -209,7 +209,7 @@ pub fn get_puzzle_and_solution_for_coin2<'a>(
     let (generator, backrefs) =
         node_from_bytes_backrefs_record(&mut allocator, generator.as_ref())?;
     let args = setup_generator_args(&mut allocator, refs)?;
-    let dialect = &CactusDialect::new(flags);
+    let dialect = &ChiaDialect::new(flags);
 
     let (puzzle, solution) = py
         .allow_threads(|| -> Result<(NodePtr, NodePtr), EvalErr> {

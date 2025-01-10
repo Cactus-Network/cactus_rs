@@ -9,7 +9,7 @@ use crate::generator_rom::{CLVM_DESERIALIZER, GENERATOR_ROM};
 use cactus_bls::{BlsCache, Signature};
 use clvm_utils::{tree_hash_cached, TreeHash};
 use clvmr::allocator::{Allocator, NodePtr};
-use clvmr::cactus_dialect::CactusDialect;
+use clvmr::chia_dialect::ChiaDialect;
 use clvmr::cost::Cost;
 use clvmr::reduction::Reduction;
 use clvmr::run_program::run_program;
@@ -108,7 +108,7 @@ where
     let args = a.new_pair(args, a.nil())?;
     let args = a.new_pair(program, args)?;
 
-    let dialect = CactusDialect::new(flags);
+    let dialect = ChiaDialect::new(flags);
     let Reduction(clvm_cost, generator_output) =
         run_program(a, &dialect, generator_rom, args, cost_left)?;
 
@@ -184,7 +184,7 @@ where
     };
 
     let args = setup_generator_args(a, block_refs)?;
-    let dialect = CactusDialect::new(flags);
+    let dialect = ChiaDialect::new(flags);
 
     let Reduction(clvm_cost, mut all_spends) = run_program(a, &dialect, program, args, cost_left)?;
 

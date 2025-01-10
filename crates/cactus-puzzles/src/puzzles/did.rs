@@ -128,7 +128,7 @@ mod tests {
     use clvmr::{
         run_program,
         serde::{node_from_bytes, node_to_bytes},
-        Allocator, CactusDialect,
+        Allocator, ChiaDialect,
     };
 
     use super::*;
@@ -159,7 +159,7 @@ mod tests {
         .to_clvm(a)
         .unwrap();
 
-        let output = run_program(a, &CactusDialect::new(0), curried, ptr, u64::MAX)
+        let output = run_program(a, &ChiaDialect::new(0), curried, ptr, u64::MAX)
             .expect("could not run did puzzle and solution");
         assert_eq!(
             hex::encode(node_to_bytes(a, output.1).unwrap()),
