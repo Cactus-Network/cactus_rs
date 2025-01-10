@@ -2,7 +2,7 @@
 name = "cactus_rs"
 version = "0.17.0"
 authors = ["Dommer <hdommer@cactus-network.net>"]
-edition = "2025"
+edition = "2021"
 license = "Apache-2.0"
 description = "Code useful for implementing cactus consensus."
 homepage = "https://github.com/Cactus-Network/cactus_rs"

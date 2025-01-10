@@ -1,7 +1,7 @@
 [package]
 name = "cactus-bls"
 version = "0.17.0"
-edition = "2025"
+edition = "2021"
 license = "Apache-2.0"
 description = "BLS signature, verification and aggregation functions for the Cactus blockchain"
 authors = ["Dommer <dommer@cactus-network.net>"]

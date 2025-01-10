@@ -4,7 +4,7 @@ version = "0.17.0"
 edition = "2021"
 license = "Apache-2.0"
 description = "Cactus traits for Streamable types (cactus's serialization format)"
-authors = ["Arvid Norberg <arvid@cactus-network.net>"]
+authors = ["Dommer <dommer@cactus-network.net>"]
 
 [lints]
 workspace = true

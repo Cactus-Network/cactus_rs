@@ -1,7 +1,7 @@
 [package]
 name = "cactus"
 version = "0.17.0"
-edition = "2025"
+edition = "2021"
 license = "Apache-2.0"
 description = "A meta-crate that exports all of the Cactus crates in the workspace."
 authors = [

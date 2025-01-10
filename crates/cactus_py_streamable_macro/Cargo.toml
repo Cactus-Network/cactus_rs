@@ -4,7 +4,7 @@ version = "0.17.0"
 edition = "2021"
 license = "Apache-2.0"
 description = "Derive macro to create python bindings for Cactus types"
-authors = ["Arvid Norberg <arvid@libtorrent.org>"]
+authors = ["Dommer<dommer@cactus-network.net>"]
 homepage = "https://github.com/Cactus-Network/cactus_rs"
 repository = "https://github.com/Cactus-Network/cactus_rs"
 
